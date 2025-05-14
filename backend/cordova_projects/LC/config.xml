@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+        <widget id="com.example.LC" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+            <name>LC</name>
+            <description>Sample Apache Cordova App</description>
+            <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
+                Apache Cordova Team
+            </author>
+            <platform name="android">
+                   <!-- App Icon -->
+    <icon src="icon.png" />
+
+    <!-- Splash Screen Preferences -->
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="3000" /> <!-- Splash screen delay in ms -->
+    <preference name="AutoHideSplashScreen" value="true" />
+    
+    <!-- Set Android-specific splash screen behavior -->
+    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="icon.png" />
+    <preference name="AndroidWindowSplashScreenBackgroundColor" value="#FFFFFF" /> <!-- Background color -->
+            </platform>
+            <content src="https://leetcode.com" />
+           <allow-navigation href="https://*/*" />
+            <allow-intent href="http://*/*" />
+            <allow-intent href="https://*/*" />
+        </widget>

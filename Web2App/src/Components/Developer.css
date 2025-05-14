@@ -1,0 +1,687 @@
+/* Base section styling */
+.developer-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 120px 40px;
+  background-color: #0c0c0c; /* Match description background */
+  color: #ffffff;
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Add grid overlay similar to description section */
+.developer-grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(6, 182, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(6, 182, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Add radial gradient background similar to description */
+.developer-section::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle at center, #06b6ff 0%, transparent 25%);
+  opacity: 0.03;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Keep the depth-overlay for additional effect */
+.depth-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(6, 182, 255, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(6, 182, 255, 0.05) 0%, transparent 40%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Header styling */
+.developer-header {
+width: 100%;
+max-width: 1200px;
+margin-bottom: 80px;
+position: relative;
+z-index: 2;
+}
+
+.developer-title-container {
+position: relative;
+margin-bottom: 24px;
+}
+
+.developer-subtitle {
+font-size: 14px;
+font-weight: 600;
+letter-spacing: 3px;
+color: #06b6ff;
+margin-bottom: 12px;
+opacity: 0.8;
+text-transform: uppercase;
+}
+
+.developer-title {
+font-size: 4rem;
+font-weight: 800;
+letter-spacing: -1px;
+line-height: 1.1;
+margin: 0;
+background: linear-gradient(180deg, #ffffff 0%, #a0a0a0 100%);
+background-clip: text;
+-webkit-background-clip: text;
+color: transparent;
+}
+
+.developer-title-highlight {
+position: relative;
+color: #06b6ff;
+background: linear-gradient(90deg, #06b6ff, #00e1ff);
+background-clip: text;
+-webkit-background-clip: text;
+color: transparent;
+}
+
+.developer-title-highlight::after {
+content: '';
+position: absolute;
+width: 100%;
+height: 8px;
+bottom: 8px;
+left: 0;
+background: rgba(6, 182, 255, 0.2);
+border-radius: 4px;
+z-index: -1;
+}
+
+.developer-description {
+font-size: 18px;
+font-weight: 300;
+line-height: 1.6;
+color: #a0a0a0;
+max-width: 600px;
+}
+
+/* Updated grid layout for unique alignment */
+.developer-grid {
+display: grid;
+width: 100%;
+max-width: 1200px;
+grid-template-columns: repeat(6, 1fr);
+grid-auto-rows: minmax(100px, auto);
+grid-gap: 25px;
+place-items: start;
+perspective: 1000px;
+}
+
+/* Card base styling */
+.dev-card {
+position: relative;
+color: #ffffff;
+will-change: transform, opacity;
+transform-style: preserve-3d;
+z-index: 1;
+transition: transform 0.5s ease, opacity 0.8s ease;
+cursor: pointer;
+width: 100%; /* Full width within grid area */
+height: 100%; /* Full height within grid area */
+min-height: 300px; /* Minimum height for all cards */
+}
+
+/* Different card sizes */
+.dev-card-size-large {
+grid-column: span 3;
+grid-row: span 2;
+height: 480px;
+max-width: 100%;
+}
+
+.dev-card-size-medium {
+grid-column: span 2;
+grid-row: span 1;
+height: 380px;
+max-width: 100%;
+}
+
+.dev-card-size-small {
+grid-column: span 1;
+grid-row: span 1;
+height: 340px;
+max-width: 100%;
+}
+
+/* Card content container */
+.dev-card-content {
+position: relative;
+width: 100%;
+height: 100%;
+transform-style: preserve-3d;
+}
+
+.dev-card-front {
+position: relative;
+width: 100%;
+height: 100%;
+background: rgba(25, 25, 30, 0.4);
+border-radius: 24px;
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+padding: 32px;
+display: flex;
+flex-direction: column;
+overflow: hidden;
+transform-style: preserve-3d;
+}
+
+/* Card border effect */
+.dev-card-border {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+border: 1px solid rgba(6, 182, 255, 0.1);
+border-radius: 24px;
+z-index: -1;
+}
+
+/* Blur effect behind card */
+.dev-card-blur {
+position: absolute;
+top: 10%;
+left: 10%;
+right: 10%;
+bottom: 10%;
+background: rgba(6, 182, 255, 0.05);
+filter: blur(40px);
+z-index: -2;
+border-radius: 40%;
+opacity: 0.5;
+transform: translateZ(-20px);
+}
+
+/* Abstract shapes for each card type */
+.dev-card-shape {
+position: absolute;
+z-index: -1;
+opacity: 0.15;
+transition: all 0.3s ease;
+}
+
+.dev-card-primary .dev-card-shape {
+top: -10%;
+right: -20%;
+width: 200px;
+height: 200px;
+background: linear-gradient(135deg, #06b6ff, transparent);
+border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+transform: rotate(25deg);
+}
+
+.dev-card-secondary .dev-card-shape {
+bottom: -10%;
+left: -10%;
+width: 180px;
+height: 180px;
+background: linear-gradient(225deg, #06b6ff, transparent);
+border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+transform: rotate(-15deg);
+}
+
+.dev-card-tertiary .dev-card-shape {
+top: -20%;
+left: 10%;
+width: 160px;
+height: 160px;
+background: linear-gradient(45deg, #06b6ff, transparent);
+border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%;
+transform: rotate(45deg);
+}
+.dev-card-accent .dev-card-shape {
+bottom: 10%;
+right: -15%;
+width: 190px;
+height: 190px;
+background: linear-gradient(315deg, #06b6ff, transparent);
+border-radius: 30% 70% 40% 60% / 40% 50% 50% 60%;
+transform: rotate(-30deg);
+}
+
+/* Secondary shape for layered effect */
+.dev-card-shape-2 {
+position: absolute;
+z-index: -2;
+opacity: 0.07;
+transition: all 0.3s ease;
+}
+
+.dev-card-primary .dev-card-shape-2 {
+bottom: -15%;
+left: -10%;
+width: 150px;
+height: 150px;
+background: #06b6ff;
+border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+transform: rotate(15deg);
+}
+
+.dev-card-secondary .dev-card-shape-2 {
+top: -10%;
+right: -5%;
+width: 130px;
+height: 130px;
+background: #06b6ff;
+border-radius: 20% 80% 40% 60% / 40% 20% 80% 60%;
+transform: rotate(30deg);
+}
+
+.dev-card-tertiary .dev-card-shape-2 {
+bottom: -5%;
+right: 5%;
+width: 120px;
+height: 120px;
+background: #06b6ff;
+border-radius: 40% 60% 70% 30% / 40% 50% 50% 60%;
+transform: rotate(-15deg);
+}
+
+.dev-card-accent .dev-card-shape-2 {
+top: 5%;
+left: -10%;
+width: 140px;
+height: 140px;
+background: #06b6ff;
+border-radius: 70% 30% 50% 50% / 30% 40% 60% 70%;
+transform: rotate(-20deg);
+}
+
+/* Enhanced card hover effects with increased translate Z */
+.dev-card:hover {
+transform: translateZ(40px); /* Added default translateZ for all cards */
+box-shadow: 0 15px 35px rgba(6, 182, 255, 0.2);
+}
+
+.dev-card:hover .dev-card-shape {
+opacity: 0.25;
+transform: scale(1.1) rotate(5deg);
+}
+
+.dev-card:hover .dev-card-shape-2 {
+opacity: 0.12;
+transform: scale(1.15) rotate(-5deg);
+}
+
+/* Card header with number indicator */
+.dev-card-header {
+display: flex;
+align-items: center;
+margin-bottom: 24px;
+}
+
+.dev-card-index {
+font-size: 16px;
+font-weight: 800;
+color: #06b6ff;
+margin-right: 12px;
+opacity: 0.8;
+}
+
+.dev-card-line {
+flex-grow: 1;
+height: 1px;
+background: linear-gradient(90deg, #06b6ff, transparent);
+opacity: 0.3;
+}
+
+/* Profile section styling */
+.dev-profile {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+margin-bottom: 24px;
+}
+
+/* Size-specific avatar adjustments */
+.dev-card-size-large .dev-avatar-container {
+width: 130px;
+height: 130px;
+}
+
+.dev-card-size-medium .dev-avatar-container {
+width: 100px;
+height: 100px;
+}
+
+.dev-card-size-small .dev-avatar-container {
+width: 80px;
+height: 80px;
+}
+
+.dev-avatar-container {
+position: relative;
+margin-bottom: 24px;
+overflow: hidden;
+border-radius: 16px;
+transform: rotate(-2deg);
+transition: all 0.4s ease;
+}
+
+.dev-avatar {
+width: 100%;
+height: 100%;
+object-fit: cover;
+transform: scale(1.1);
+transition: all 0.4s ease;
+}
+
+.dev-avatar-overlay {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: linear-gradient(135deg, rgba(6, 182, 255, 0.2), transparent);
+z-index: 1;
+}
+
+.dev-card:hover .dev-avatar-container {
+transform: rotate(0deg) scale(1.05);
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.dev-card:hover .dev-avatar {
+transform: scale(1.05);
+}
+
+/* Developer info styling */
+.dev-info {
+width: 100%;
+}
+
+/* Size-specific text adjustments */
+.dev-card-size-large .dev-name {
+font-size: 30px;
+}
+
+.dev-card-size-medium .dev-name {
+font-size: 24px;
+}
+
+.dev-card-size-small .dev-name {
+font-size: 20px;
+}
+
+.dev-card-size-large .dev-role {
+font-size: 18px;
+}
+
+.dev-card-size-medium .dev-role {
+font-size: 16px;
+}
+
+.dev-card-size-small .dev-role {
+font-size: 14px;
+}
+
+.dev-name {
+font-weight: 700;
+margin: 0 0 8px 0;
+color: #ffffff;
+position: relative;
+display: inline-block;
+}
+
+.dev-name::after {
+content: '';
+position: absolute;
+width: 0;
+height: 2px;
+bottom: -4px;
+left: 0;
+background: #06b6ff;
+transition: width 0.3s ease;
+}
+
+.dev-card:hover .dev-name::after {
+width: 100%;
+}
+
+.dev-role {
+font-weight: 400;
+color: rgba(255, 255, 255, 0.7);
+margin: 0;
+min-height: 24px;
+}
+
+.dev-cursor {
+display: inline-block;
+color: #06b6ff;
+font-weight: bold;
+animation: cursorBlink 0.8s infinite;
+}
+
+@keyframes cursorBlink {
+0%, 100% { opacity: 0; }
+50% { opacity: 1; }
+}
+
+/* Social links styling */
+.dev-socials {
+display: flex;
+gap: 16px;
+margin-top: auto;
+}
+
+.dev-social-link {
+width: 40px;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 12px;
+background: rgba(255, 255, 255, 0.05);
+transition: all 0.3s ease;
+position: relative;
+overflow: hidden;
+}
+
+.dev-social-link::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: linear-gradient(135deg, #06b6ff, #00e1ff);
+opacity: 0;
+transition: opacity 0.3s ease;
+z-index: 0;
+}
+
+.dev-social-icon {
+font-size: 18px;
+color: rgba(255, 255, 255, 0.8);
+transition: all 0.3s ease;
+z-index: 1;
+position: relative;
+}
+
+.dev-social-link:hover {
+transform: translateY(-4px);
+box-shadow: 0 4px 12px rgba(6, 182, 255, 0.3);
+}
+
+.dev-social-link:hover::before {
+opacity: 1;
+}
+
+.dev-social-link:hover .dev-social-icon {
+color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .dev-card-tertiary{
+    margin:0px;
+  }
+.developer-grid {
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+}
+
+.dev-card-size-large {
+  grid-column: span 2;
+  grid-row: span 2;
+  height: 460px;
+}
+
+.dev-card-size-medium {
+  grid-column: span 2;
+  grid-row: span 1;
+  height: 360px;
+}
+
+.dev-card-size-small {
+  grid-column: span 2;
+  grid-row: span 1;
+  height: 320px;
+}
+}
+
+@media (max-width: 768px) {
+  .dev-card-tertiary{
+    margin:0px;
+  }
+.developer-section {
+  padding: 80px 20px;
+}
+
+.developer-title {
+  font-size: 3rem;
+}
+
+.developer-grid {
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+.dev-card-size-large {
+  grid-column: span 2;
+  grid-row: span 1;
+  height: 400px;
+}
+
+.dev-card-size-medium {
+  grid-column: span 2;
+  grid-row: span 1;
+  height: 380px;
+}
+
+.dev-card-size-small {
+  grid-column: span 2;
+  grid-row: span 1;
+  height: 360px;
+}
+
+.dev-card-size-large .dev-avatar-container,
+.dev-card-size-medium .dev-avatar-container,
+.dev-card-size-small .dev-avatar-container {
+  width: 90px;
+  height: 90px;
+}
+
+.dev-card-size-large .dev-name,
+.dev-card-size-medium .dev-name,
+.dev-card-size-small .dev-name {
+  font-size: 22px;
+}
+
+.dev-card-size-large .dev-role,
+.dev-card-size-medium .dev-role,
+.dev-card-size-small .dev-role {
+  font-size: 15px;
+}
+}
+
+@media (max-width: 480px) {
+  .dev-card-tertiary{
+    margin:0px;
+  }
+.developer-grid {
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+}
+
+.dev-card-size-large,
+.dev-card-size-medium,
+.dev-card-size-small {
+  grid-column: span 1;
+  width: 100%;
+  min-height: 320px; /* Set minimum height for all cards on mobile */
+  height: auto; /* Let height be determined by content */
+}
+
+.dev-card-front {
+  padding: 24px; /* Reduce padding for mobile */
+}
+
+.dev-card-size-large .dev-name,
+.dev-card-size-medium .dev-name,
+.dev-card-size-small .dev-name {
+  font-size: 22px; /* Consistent font size on mobile */
+}
+}
+
+/* Animation for staggered entrance */
+@keyframes slideInUp {
+from {
+  opacity: 0;
+  transform: translateY(40px);
+}
+to {
+  opacity: 1;
+  transform: translateY(0);
+}
+}
+
+.dev-card {
+animation: slideInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+opacity: 0;
+}
+
+.dev-card-primary {
+animation-delay: 0.1s;
+}
+
+.dev-card-secondary {
+animation-delay: 0.3s;
+}
+
+.dev-card-tertiary {
+animation-delay: 0.5s;
+}
+
+.dev-card-accent {
+animation-delay: 0.7s;
+}
+.dev-card-tertiary{
+  height: 22rem;
+}

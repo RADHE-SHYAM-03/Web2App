@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "cordova": "^6.1.1",
+    "cordova-android": "^11.0.0",
+    "cors": "^2.8.5",
+    "lucide-react": "^0.495.0",
+    "node": "^23.11.0",
+    "react-icons": "^5.5.0",
+    "react-intersection-observer": "^9.16.0"
+  }
+}
