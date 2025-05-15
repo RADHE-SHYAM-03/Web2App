@@ -4,6 +4,7 @@ import Hero from "../Images/Hero.png";
 import "./Herocontainer.css";
 import Navbar from './Navbar'; 
 import axios from 'axios';
+
 const Herocontainer = () => {
   const [showPrompt, setShowPrompt] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -18,6 +19,8 @@ const Herocontainer = () => {
   const [editableText, setEditableText] = useState('Generating Your APK...');
   const [messageText, setMessageText] = useState('Apk Downloaded Successfully!');
   const [showMessageText, setShowMessageText] = useState(false);
+  const [enableDocumentOpening, setEnableDocumentOpening] = useState(true);
+  const [documentFileTypes, setDocumentFileTypes] = useState(['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt']);
   
   const { ref: heroRef, inView: heroInView } = useInView({
     triggerOnce: true,
@@ -34,7 +37,7 @@ const Herocontainer = () => {
       const timer = setInterval(() => {
         if (counter % 3 === 0) setEditableText('Generating your APK...');
         if (counter % 3 === 1) setEditableText('Your APK will be ready in a few seconds...');
-        if (counter % 3 === 2) setEditableText('Your APK will be downloaded automatically...');
+        if (counter % 3 === 2) setEditableText('Your APK will be downloaded shortly...');
         counter++;
       }, 3000); // Change text after 3 seconds
       return () => clearTimeout(timer);
@@ -49,7 +52,9 @@ const Herocontainer = () => {
         formData.append("appName", appName.trim());
         formData.append("url", cleanUrl(urlInput));
         formData.append("googleServices", googleServiceFile);
-        formData.append("icon", icon); // Send the file directly
+        formData.append("icon", icon);
+        formData.append("enableDocumentOpening", enableDocumentOpening);
+        formData.append("documentFileTypes", JSON.stringify(documentFileTypes));
 
         const response = await axios.post("http://192.168.1.83:3000/generate-apk",
           formData,
@@ -67,14 +72,18 @@ const Herocontainer = () => {
         document.body.removeChild(link);
         setDownloadLink(url);
         setShowMessageText(true);
+        setMessageText('APK Downloaded Successfully! The app will open document files automatically after installation.');
         setTimeout(() => {
           setShowMessageText(false);
-        }, 4000);
+        }, 6000);
       } else {
         const formData = new FormData();
         formData.append("appName", appName);
         formData.append("icon", icon);
         formData.append("zipFile", projectZip);
+        formData.append("enableDocumentOpening", enableDocumentOpening);
+        formData.append("documentFileTypes", JSON.stringify(documentFileTypes));
+        
         const response = await axios.post("http://192.168.1.83:3000/generate-apk-zip",
           formData,
           {
@@ -90,6 +99,11 @@ const Herocontainer = () => {
         link.click();
         document.body.removeChild(link);
         setDownloadLink(url);
+        setShowMessageText(true);
+        setMessageText('APK Downloaded Successfully! The app will open document files automatically after installation.');
+        setTimeout(() => {
+          setShowMessageText(false);
+        }, 6000);
       }
     } catch (e) {
       console.error(e.message);
@@ -128,6 +142,15 @@ const Herocontainer = () => {
 
   const handleUrlChange = (e) => {
     setUrlInput(e.target.value);
+  };
+
+  const handleDocumentTypeChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setDocumentFileTypes([...documentFileTypes, value]);
+    } else {
+      setDocumentFileTypes(documentFileTypes.filter(type => type !== value));
+    }
   };
 
   return (
@@ -176,6 +199,13 @@ const Herocontainer = () => {
                 <polyline points="22 4 12 14.01 9 11.01" />
               </svg>
               Full customization
+            </div>
+            <div className="hero-feature">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+              Open document files
             </div>
           </div>
         </div>
@@ -271,11 +301,40 @@ const Herocontainer = () => {
                     }}
                   />
                   <p className="input-help">{icon ? icon.name : "Select File"}</p>
+                  
+                  {/* Document Files Opening Option */}
                   <div className="show-notification-div">
+                    <div className={`enable-notification ${enableDocumentOpening ? 'enable' : ''}`} onClick={() => setEnableDocumentOpening(!enableDocumentOpening)}>
+                    </div>
+                    <p style={{ color: 'white' }}>Enable Document File Opening</p>
+                  </div>
+                  
+                  {enableDocumentOpening && (
+                    <div className="document-types-container" style={{ marginTop: '10px', color: 'white' }}>
+                      <p style={{ marginBottom: '5px' }}>Select document types to open:</p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                        {['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt'].map(type => (
+                          <div key={type} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                            <input
+                              type="checkbox"
+                              id={`file-type-${type}`}
+                              value={type}
+                              checked={documentFileTypes.includes(type)}
+                              onChange={handleDocumentTypeChange}
+                            />
+                            <label htmlFor={`file-type-${type}`}>.{type}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="show-notification-div" style={{ marginTop: '10px' }}>
                     <div className={`enable-notification ${enableNotification ? 'enable' : ''}`} onClick={() => setEnableNotification(!enableNotification)}>
                     </div>
                     <p style={{ color: 'white' }}>Enable Firebase Notification</p>
                   </div>
+                  
                   {enableNotification && (
                     <>
                     <label type="text"
@@ -308,7 +367,7 @@ const Herocontainer = () => {
 
                   
                   {donwloadLink !== '' && (
-                    <a style={{ color: 'white', cursor: 'pointer' }} href={donwloadLink}>Donwload</a>
+                    <a style={{ color: 'white', cursor: 'pointer' }} href={donwloadLink}>Download</a>
                   )}
 
                 </div>
@@ -351,6 +410,34 @@ const Herocontainer = () => {
                   ) : (
                     <p className="input-help" style={{ fontSize: "16px" }}>{icon.name}</p>
                   )}
+                  
+                  {/* Document Files Opening Option */}
+                  <div className="show-notification-div">
+                    <div className={`enable-notification ${enableDocumentOpening ? 'enable' : ''}`} onClick={() => setEnableDocumentOpening(!enableDocumentOpening)}>
+                    </div>
+                    <p style={{ color: 'white' }}>Enable Document File Opening</p>
+                  </div>
+                  
+                  {enableDocumentOpening && (
+                    <div className="document-types-container" style={{ marginTop: '10px', color: 'white' }}>
+                      <p style={{ marginBottom: '5px' }}>Select document types to open:</p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                        {['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt'].map(type => (
+                          <div key={type} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                            <input
+                              type="checkbox"
+                              id={`file-type-local-${type}`}
+                              value={type}
+                              checked={documentFileTypes.includes(type)}
+                              onChange={handleDocumentTypeChange}
+                            />
+                            <label htmlFor={`file-type-local-${type}`}>.{type}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
                   <label className="file-input-label">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
