@@ -228,20 +228,6 @@ We welcome contributions! Please follow these steps:
 - **Push Notification Delivery:** ~3-5 seconds average
 - **Cross-Device Compatibility:** 95%+ Android devices
 
-## 🐛 Known Issues
-
-- Minor push notification delays on low connectivity devices
-- Performance optimization needed for content-heavy websites
-- Offline functionality not yet implemented
-
-
-## 🙏 Acknowledgments
-
-- Apache Cordova community for the excellent framework
-- Firebase team for reliable push notification service
-- Faculty members at GP Panchkula for guidance and support
-- All beta testers who provided valuable feedback
-
 ---
 
 ⭐ **Star this repository if you find it useful!**
