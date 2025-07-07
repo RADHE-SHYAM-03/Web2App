@@ -9,7 +9,7 @@
 
 ## 🌟 Overview
 
-Web2App is an innovative solution that automates the conversion of websites into fully functional Android applications. Built as a final year project for Computer Engineering Diploma at Govt. Polytechnic Panchkula, this system eliminates the need for extensive mobile app development by providing a simple, user-friendly interface for web-to-app conversion.
+Web2App is an innovative solution that automates the conversion of websites into fully functional Android applications.This system eliminates the need for extensive mobile app development by providing a simple, user-friendly interface for web-to-app conversion.
 
 ## ✨ Key Features
 
